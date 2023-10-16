@@ -1,13 +1,11 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:mobile_and_laptop_store/presentation/login_screens/siginup.dart';
 
 import '../../core/color.dart';
 import '../view/home_screen.dart';
-import '../widgets/black_friday_widgets.dart';
 import '../widgets/custombotton.dart';
 import '../widgets/formfield.dart';
 import 'forgot_password.dart';
@@ -20,11 +18,12 @@ class Log extends StatefulWidget {
 }
 
 class _LogState extends State<Log> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   String email = "";
   String password = "";
   bool isPassword = true;
   bool isLoading = false;
-  late String token;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -107,19 +106,20 @@ class _LogState extends State<Log> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              Forms(
+                               Forms(
                                 titel: 'Email',
-                                validator: "Enter Valid Email",
+                                validator: "Enter Valid Email", controller: emailController,
                               ),
                               const SizedBox(
                                 height: 20,
                               ),
-                              Forms(
+                               Forms(
                                 titel: 'Password',
-                                validator: "Enter Valid Password",
+                                validator: "Enter Valid Password", controller: passwordController,
                               ),
                               Padding(
-                                padding: EdgeInsets.only(top: 16.0, right: 20),
+                                padding:
+                                    const EdgeInsets.only(top: 16.0, right: 20),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
@@ -132,7 +132,7 @@ class _LogState extends State<Log> {
                                                   const ForgotPassword()),
                                         );
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         'Forgot password?',
                                         style: TextStyle(
                                             fontSize: 11,
@@ -148,24 +148,19 @@ class _LogState extends State<Log> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: isLoading
-                                    ? Center(
+                                    ? const Center(
                                         child: CircularProgressIndicator(),
                                       )
                                     : CustomButton(
                                         onTap: () {
-
-                                          if(  _formKey.currentState!.validate()
-                                          )
-                                            return
-
-
-
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                    const HomeScreen()),
-                                              );
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            _formKey.currentState!.save();
+                                            login(
+                                                emailController.text.toString(),
+                                                passwordController.text
+                                                    .toString());
+                                          }
                                         },
                                         text: 'Sign in',
                                       ),
@@ -185,7 +180,7 @@ class _LogState extends State<Log> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'Don’t have an account?',
                     style: TextStyle(
                       color: Colors.white,
@@ -199,7 +194,7 @@ class _LogState extends State<Log> {
                         MaterialPageRoute(builder: (context) => const Signup()),
                       );
                     },
-                    child: Text(' Sign up',
+                    child: const Text(' Sign up',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 15,
@@ -215,21 +210,24 @@ class _LogState extends State<Log> {
     ));
   }
 
-  Future login() async {
-    setState(() {
-      isLoading = true;
-    });
-    Response response =
-        await post(Uri.parse("https://reqres.in/api/login"), headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-      'Authorization': 'Bearer $token',
-    }, body: {
-      "email": email,
-      "password": password,
-    });
+  Future login(String email, password) async {
+    try {
+      Response response = await post(Uri.parse('https://reqres.in/api/login'),
+          body: {'email': email, 'password': password});
 
-    setState(() {
-      isLoading = false;
-    });
+      if (response.statusCode == 200) {
+
+
+        Navigator.push(
+            context, MaterialPageRoute(builder: (_) => HomeScreen()));
+        print('Login successfully');
+      } else {
+        print('failed');
+      }
+
+
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }

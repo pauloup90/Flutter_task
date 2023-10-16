@@ -10,8 +10,8 @@ class CustomButton extends StatelessWidget {
     return  SizedBox(
         child:
             GestureDetector(
-          onTap: onTap,
-          child: Container(
+              onTap: onTap,
+             child: Container(
             margin: const EdgeInsets.only(bottom: 40),
             width: 270,
             decoration: BoxDecoration(

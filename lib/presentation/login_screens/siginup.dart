@@ -106,6 +106,7 @@ class _SignupState extends State<Signup> {
                                       height: 20,
                                     ),
                                     Forms(
+                                      controller: '',
                                       titel: 'Name',
                                       validator: "Enter Valid Name",
                                     ),
@@ -114,6 +115,7 @@ class _SignupState extends State<Signup> {
                                       height: 20,
                                     ),
                                     Forms(
+                                      controller: '',
                                       titel: 'Email',
                                       validator: "Enter Valid Email",
                                     ),
@@ -121,6 +123,7 @@ class _SignupState extends State<Signup> {
                                       height: 20,
                                     ),
                                     Forms(
+                                      controller: '',
                                       titel: 'Password',
                                       validator: "Enter Valid Password",
                                     ),
@@ -129,6 +132,7 @@ class _SignupState extends State<Signup> {
                                     ),
 
                                     Forms(
+                                      controller: '',
                                       titel: 'Phone Number',
                                       validator: "Enter Valid Phone Number",
                                     ),

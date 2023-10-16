@@ -101,7 +101,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               ),
                               Forms(
                                 titel: 'Enter Email Address',
-                                validator: "Enter Valid Email",
+                                validator: "Enter Valid Email", controller: '',
                               ),
                               TextButton(
                                 onPressed: () {

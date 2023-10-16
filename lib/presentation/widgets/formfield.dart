@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import '../../core/color.dart';
 
 class Forms extends StatelessWidget {
-  const Forms({super.key,required this.titel,required this.validator});
+  const Forms({super.key,required this.titel,required this.validator, required this.controller});
  final titel;
  final validator;
+ final controller;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +20,7 @@ class Forms extends StatelessWidget {
         ),
         keyboardType:
         TextInputType.emailAddress,
+        controller:controller,
         decoration:  InputDecoration(
             hintText: titel,
 
